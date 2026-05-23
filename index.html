@@ -1,0 +1,1653 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>بيتي - كراء المنازل</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    
+    body {
+      font-family: 'Segoe UI', Tahoma, sans-serif;
+      background: #f0f4f8;
+      color: #333;
+      max-width: 480px;
+      margin: 0 auto;
+      min-height: 100vh;
+      position: relative;
+    }
+
+    /* ===== HEADER ===== */
+    .header {
+      background: linear-gradient(135deg, #1565C0, #1976D2, #42A5F5);
+      color: white;
+      padding: 16px 20px;
+      position: fixed;
+      top: 0;
+      width: 100%;
+      max-width: 480px;
+      z-index: 1000;
+      box-shadow: 0 4px 20px rgba(21,101,192,0.4);
+    }
+
+    .header-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 14px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo-icon {
+      width: 42px;
+      height: 42px;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 22px;
+    }
+
+    .logo-text h1 {
+      font-size: 22px;
+      font-weight: 800;
+      letter-spacing: 1px;
+    }
+
+    .logo-text p {
+      font-size: 11px;
+      opacity: 0.8;
+    }
+
+    .header-icons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .header-icon-btn {
+      width: 38px;
+      height: 38px;
+      background: rgba(255,255,255,0.15);
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .header-icon-btn:hover {
+      background: rgba(255,255,255,0.3);
+      transform: scale(1.1);
+    }
+
+    /* ===== SEARCH BAR ===== */
+    .search-bar {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .search-input-wrapper {
+      flex: 1;
+      position: relative;
+    }
+
+    .search-input-wrapper i {
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: #90CAF9;
+      font-size: 14px;
+    }
+
+    .search-input {
+      width: 100%;
+      padding: 11px 40px 11px 14px;
+      border: none;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.15);
+      color: white;
+      font-size: 14px;
+      outline: none;
+    }
+
+    .search-input::placeholder { color: rgba(255,255,255,0.7); }
+
+    .search-input:focus {
+      background: rgba(255,255,255,0.25);
+    }
+
+    .filter-btn {
+      width: 42px;
+      height: 42px;
+      background: rgba(255,255,255,0.2);
+      border: none;
+      border-radius: 12px;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    /* ===== CONTENT ===== */
+    .content {
+      padding-top: 145px;
+      padding-bottom: 90px;
+      min-height: 100vh;
+    }
+
+    /* ===== PAGES ===== */
+    .page { display: none; padding: 16px; }
+    .page.active { display: block; }
+
+    /* ===== CATEGORIES ===== */
+    .categories {
+      display: flex;
+      gap: 10px;
+      overflow-x: auto;
+      padding: 4px 0 12px;
+      scrollbar-width: none;
+    }
+
+    .categories::-webkit-scrollbar { display: none; }
+
+    .cat-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 6px;
+      padding: 12px 16px;
+      border: 2px solid #e0e0e0;
+      border-radius: 16px;
+      background: white;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+      min-width: 70px;
+    }
+
+    .cat-btn.active {
+      border-color: #1976D2;
+      background: #E3F2FD;
+      color: #1976D2;
+    }
+
+    .cat-icon {
+      font-size: 24px;
+    }
+
+    .cat-label {
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    /* ===== SECTION TITLE ===== */
+    .section-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 16px;
+    }
+
+    .section-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1a1a2e;
+    }
+
+    .see-all {
+      color: #1976D2;
+      font-size: 13px;
+      cursor: pointer;
+      font-weight: 600;
+    }
+
+    /* ===== FEATURED CARD ===== */
+    .featured-card {
+      border-radius: 20px;
+      overflow: hidden;
+      margin-bottom: 20px;
+      box-shadow: 0 8px 25px rgba(0,0,0,0.12);
+      cursor: pointer;
+      transition: transform 0.2s;
+      background: white;
+    }
+
+    .featured-card:hover { transform: translateY(-3px); }
+
+    .featured-img {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .featured-img-placeholder {
+      width: 100%;
+      height: 200px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 80px;
+    }
+
+    .featured-badge {
+      position: absolute;
+      top: 16px;
+      right: 16px;
+      background: #1976D2;
+      color: white;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .featured-fav {
+      position: absolute;
+      top: 16px;
+      left: 16px;
+      width: 36px;
+      height: 36px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 18px;
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+
+    .featured-img-wrapper {
+      position: relative;
+    }
+
+    .price-badge {
+      position: absolute;
+      bottom: 16px;
+      right: 16px;
+      background: rgba(0,0,0,0.7);
+      color: white;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 700;
+      backdrop-filter: blur(4px);
+    }
+
+    .featured-info {
+      padding: 16px;
+    }
+
+    .featured-title {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 6px;
+      color: #1a1a2e;
+    }
+
+    .featured-location {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #666;
+      font-size: 13px;
+      margin-bottom: 14px;
+    }
+
+    .featured-location i { color: #1976D2; }
+
+    .featured-specs {
+      display: flex;
+      gap: 16px;
+    }
+
+    .spec-item {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      color: #555;
+      font-size: 13px;
+    }
+
+    .spec-item i { color: #1976D2; font-size: 14px; }
+
+    /* ===== HOUSE CARD ===== */
+    .houses-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .house-card {
+      background: white;
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      cursor: pointer;
+      transition: all 0.25s;
+      display: flex;
+      flex-direction: row;
+      height: 120px;
+    }
+
+    .house-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+
+    .house-card-img {
+      width: 120px;
+      min-width: 120px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 50px;
+    }
+
+    .house-card-info {
+      padding: 14px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .house-card-title {
+      font-size: 15px;
+      font-weight: 700;
+      color: #1a1a2e;
+      margin-bottom: 4px;
+    }
+
+    .house-card-city {
+      font-size: 12px;
+      color: #888;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .house-card-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .house-card-price {
+      font-size: 16px;
+      font-weight: 800;
+      color: #2E7D32;
+    }
+
+    .house-card-fav {
+      font-size: 22px;
+      cursor: pointer;
+    }
+
+    /* ===== STATS CARDS ===== */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .stat-card {
+      background: white;
+      border-radius: 16px;
+      padding: 14px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .stat-icon {
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .stat-number {
+      font-size: 22px;
+      font-weight: 800;
+      color: #1976D2;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      color: #888;
+    }
+
+    /* ===== ADD FORM ===== */
+    .form-card {
+      background: white;
+      border-radius: 20px;
+      padding: 24px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+      margin-bottom: 16px;
+    }
+
+    .form-title {
+      font-size: 18px;
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #1a1a2e;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .form-group {
+      margin-bottom: 16px;
+    }
+
+    .form-label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #555;
+      margin-bottom: 8px;
+    }
+
+    .form-input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 2px solid #e8e8e8;
+      border-radius: 14px;
+      font-size: 15px;
+      outline: none;
+      transition: border-color 0.2s;
+      font-family: inherit;
+      direction: rtl;
+    }
+
+    .form-input:focus { border-color: #1976D2; }
+
+    .form-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .type-selector {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 10px;
+    }
+
+    .type-option {
+      padding: 14px;
+      border: 2px solid #e8e8e8;
+      border-radius: 14px;
+      text-align: center;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .type-option.selected {
+      border-color: #1976D2;
+      background: #E3F2FD;
+      color: #1976D2;
+    }
+
+    .type-option-icon { font-size: 28px; margin-bottom: 4px; }
+    .type-option-label { font-size: 13px; font-weight: 600; }
+
+    /* ===== CHECKBOXES ===== */
+    .amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .amenity-chip {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border: 2px solid #e8e8e8;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 13px;
+      transition: all 0.2s;
+    }
+
+    .amenity-chip.selected {
+      border-color: #1976D2;
+      background: #E3F2FD;
+      color: #1976D2;
+    }
+
+    /* ===== SUBMIT BTN ===== */
+    .submit-btn {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #1565C0, #1976D2);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-top: 8px;
+      box-shadow: 0 6px 20px rgba(25,118,210,0.4);
+    }
+
+    .submit-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(25,118,210,0.5);
+    }
+
+    /* ===== MODAL ===== */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.6);
+      z-index: 2000;
+      align-items: flex-end;
+      justify-content: center;
+      backdrop-filter: blur(4px);
+    }
+
+    .modal-overlay.show { display: flex; }
+
+    .modal-sheet {
+      background: white;
+      width: 100%;
+      max-width: 480px;
+      border-radius: 28px 28px 0 0;
+      max-height: 92vh;
+      overflow-y: auto;
+      animation: slideUp 0.35s ease;
+    }
+
+    @keyframes slideUp {
+      from { transform: translateY(100%); }
+      to { transform: translateY(0); }
+    }
+
+    .modal-handle {
+      width: 40px;
+      height: 4px;
+      background: #ddd;
+      border-radius: 2px;
+      margin: 14px auto 0;
+    }
+
+    .modal-header {
+      padding: 16px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .modal-title {
+      font-size: 18px;
+      font-weight: 800;
+      color: #1a1a2e;
+    }
+
+    .modal-close {
+      width: 36px;
+      height: 36px;
+      background: #f5f5f5;
+      border: none;
+      border-radius: 50%;
+      font-size: 18px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .modal-body { padding: 20px; }
+
+    .modal-img-wrapper {
+      position: relative;
+      margin-bottom: 20px;
+    }
+
+    .modal-img-placeholder {
+      width: 100%;
+      height: 200px;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 90px;
+    }
+
+    .modal-price {
+      font-size: 28px;
+      font-weight: 900;
+      color: #2E7D32;
+      margin-bottom: 6px;
+    }
+
+    .modal-location {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: #666;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+
+    .modal-specs {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .modal-spec {
+      background: #f8f9ff;
+      border-radius: 14px;
+      padding: 14px;
+      text-align: center;
+    }
+
+    .modal-spec-icon { font-size: 24px; margin-bottom: 6px; }
+    .modal-spec-val { font-size: 18px; font-weight: 800; color: #1976D2; }
+    .modal-spec-lbl { font-size: 11px; color: #888; }
+
+    .modal-amenities {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+
+    .modal-amenity {
+      background: #E3F2FD;
+      color: #1976D2;
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .modal-desc {
+      background: #f8f9ff;
+      border-radius: 14px;
+      padding: 16px;
+      font-size: 14px;
+      color: #555;
+      line-height: 1.8;
+      margin-bottom: 20px;
+    }
+
+    .owner-card {
+      background: #f8f9ff;
+      border-radius: 16px;
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 20px;
+    }
+
+    .owner-avatar {
+      width: 52px;
+      height: 52px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #1565C0, #42A5F5);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 24px;
+      color: white;
+    }
+
+    .owner-info h4 {
+      font-size: 16px;
+      font-weight: 700;
+    }
+
+    .owner-info p {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .action-btns {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+
+    .action-btn {
+      padding: 16px;
+      border: none;
+      border-radius: 16px;
+      font-size: 15px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      transition: all 0.2s;
+    }
+
+    .action-btn:hover { transform: translateY(-2px); }
+
+    .btn-call {
+      background: linear-gradient(135deg, #2E7D32, #43A047);
+      color: white;
+    }
+
+    .btn-msg {
+      background: linear-gradient(135deg, #1565C0, #1976D2);
+      color: white;
+    }
+
+    .btn-book {
+      width: 100%;
+      padding: 18px;
+      background: linear-gradient(135deg, #E65100, #F57C00);
+      color: white;
+      border: none;
+      border-radius: 16px;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      box-shadow: 0 6px 20px rgba(230,81,0,0.3);
+    }
+
+    /* ===== PROFILE PAGE ===== */
+    .profile-header {
+      background: linear-gradient(135deg, #1565C0, #1976D2);
+      border-radius: 24px;
+      padding: 30px 20px;
+      text-align: center;
+      color: white;
+      margin-bottom: 20px;
+    }
+
+    .profile-avatar {
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.2);
+      margin: 0 auto 14px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 40px;
+      border: 3px solid rgba(255,255,255,0.5);
+    }
+
+    .profile-name { font-size: 22px; font-weight: 800; }
+    .profile-type { font-size: 13px; opacity: 0.8; margin-top: 4px; }
+
+    .profile-stats {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin-bottom: 20px;
+    }
+
+    .profile-stat {
+      background: white;
+      border-radius: 16px;
+      padding: 16px;
+      text-align: center;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+    }
+
+    .profile-stat-num { font-size: 24px; font-weight: 800; color: #1976D2; }
+    .profile-stat-lbl { font-size: 11px; color: #888; }
+
+    .profile-menu {
+      background: white;
+      border-radius: 20px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+    }
+
+    .profile-menu-item {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 18px 20px;
+      border-bottom: 1px solid #f5f5f5;
+      cursor: pointer;
+      transition: background 0.15s;
+    }
+
+    .profile-menu-item:last-child { border-bottom: none; }
+    .profile-menu-item:hover { background: #f8f9ff; }
+
+    .menu-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 20px;
+    }
+
+    .menu-text { flex: 1; font-size: 15px; font-weight: 600; }
+    .menu-arrow { color: #ccc; }
+
+    /* ===== FAVORITES ===== */
+    .fav-empty {
+      text-align: center;
+      padding: 60px 20px;
+    }
+
+    .fav-empty-icon { font-size: 80px; margin-bottom: 16px; }
+    .fav-empty-text { font-size: 18px; font-weight: 700; color: #333; }
+    .fav-empty-sub { font-size: 14px; color: #888; margin-top: 8px; }
+
+    /* ===== BOTTOM NAV ===== */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 100%;
+      max-width: 480px;
+      background: white;
+      border-top: 1px solid #e8e8e8;
+      display: flex;
+      z-index: 1000;
+      box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
+    }
+
+    .nav-btn {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      padding: 12px 0 10px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: #999;
+      font-size: 10px;
+      font-weight: 600;
+      transition: all 0.2s;
+    }
+
+    .nav-btn i { font-size: 22px; }
+
+    .nav-btn.active { color: #1976D2; }
+
+    .nav-btn.active i {
+      transform: translateY(-2px);
+    }
+
+    /* ===== TOAST ===== */
+    .toast {
+      position: fixed;
+      bottom: 90px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: #333;
+      color: white;
+      padding: 12px 24px;
+      border-radius: 25px;
+      font-size: 14px;
+      z-index: 9999;
+      display: none;
+      white-space: nowrap;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+    }
+
+    .toast.show {
+      display: block;
+      animation: fadeInOut 2.5s ease;
+    }
+
+    @keyframes fadeInOut {
+      0% { opacity: 0; transform: translateX(-50%) translateY(10px); }
+      15% { opacity: 1; transform: translateX(-50%) translateY(0); }
+      85% { opacity: 1; }
+      100% { opacity: 0; }
+    }
+
+    /* ===== SUCCESS ANIMATION ===== */
+    .success-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      z-index: 9998;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .success-overlay.show { display: flex; }
+
+    .success-box {
+      background: white;
+      border-radius: 24px;
+      padding: 40px 30px;
+      text-align: center;
+      max-width: 280px;
+      animation: popIn 0.4s ease;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.5); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    .success-icon { font-size: 70px; margin-bottom: 16px; }
+    .success-title { font-size: 22px; font-weight: 800; margin-bottom: 8px; }
+    .success-sub { font-size: 14px; color: #666; margin-bottom: 24px; }
+
+    .success-btn {
+      padding: 14px 32px;
+      background: #1976D2;
+      color: white;
+      border: none;
+      border-radius: 14px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    /* ===== COLORS FOR HOUSE TYPES ===== */
+    .color-blue { background: linear-gradient(135deg, #1565C0, #42A5F5); }
+    .color-green { background: linear-gradient(135deg, #2E7D32, #66BB6A); }
+    .color-orange { background: linear-gradient(135deg, #E65100, #FFA726); }
+    .color-purple { background: linear-gradient(135deg, #4A148C, #AB47BC); }
+    .color-teal { background: linear-gradient(135deg, #00695C, #26A69A); }
+    .color-red { background: linear-gradient(135deg, #B71C1C, #EF5350); }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header class="header">
+    <div class="header-top">
+      <div class="logo">
+        <div class="logo-icon">🏠</div>
+        <div class="logo-text">
+          <h1>بـيـتـي</h1>
+          <p> كراء المنازل في   المغرب</p>
+        </div>
+      </div>
+      <div class="header-icons">
+        <button class="header-icon-btn" onclick="showToast('🔔 لا توجد إشعارات جديدة')">
+          <i class="fas fa-bell"></i>
+        </button>
+        <button class="header-icon-btn" onclick="showPage('profile')">
+          <i class="fas fa-user"></i>
+        </button>
+      </div>
+    </div>
+    <div class="search-bar">
+      <div class="search-input-wrapper">
+        <i class="fas fa-search"></i>
+        <input class="search-input" id="searchInput"
+               type="text" placeholder="ابحث عن مدينة أو حي..."
+               oninput="searchHouses(this.value)"/>
+      </div>
+      <button class="filter-btn" onclick="showToast('🔧 فلتر الأسعار قريباً')">
+        <i class="fas fa-sliders-h"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- ===== CONTENT ===== -->
+  <div class="content">
+
+    <!-- HOME PAGE -->
+    <div class="page active" id="page-home">
+      <div class="categories" id="categories">
+        <button class="cat-btn active" onclick="filterCategory('all', this)">
+          <span class="cat-icon">🏘️</span>
+          <span class="cat-label">الكل</span>
+        </button>
+        <button class="cat-btn" onclick="filterCategory('شقة', this)">
+          <span class="cat-icon">🏢</span>
+          <span class="cat-label">شقة</span>
+        </button>
+        <button class="cat-btn" onclick="filterCategory('فيلا', this)">
+          <span class="cat-icon">🏡</span>
+          <span class="cat-label">فيلا</span>
+        </button>
+          
+      </div>
+
+      <!-- STATS -->
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-icon">🏠</div>
+          <div class="stat-number" id="totalCount">0</div>
+          <div class="stat-label">عقار متاح</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">🏙️</div>
+          <div class="stat-number">7</div>
+          <div class="stat-label">مدينة</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number">4.8</div>
+          <div class="stat-label">تقييم</div>
+        </div>
+      </div>
+
+      <!-- FEATURED -->
+      <div class="section-header">
+        <span class="section-title">✨ مميز اليوم</span>
+      </div>
+      <div id="featured-container"></div>
+
+      <!-- ALL HOUSES -->
+      <div class="section-header">
+        <span class="section-title">🏘️ جميع العقارات</span>
+        <span class="see-all" onclick="showToast('عرض الكل')">عرض الكل</span>
+      </div>
+      <div class="houses-grid" id="houses-list"></div>
+    </div>
+
+    <!-- FAVORITES PAGE -->
+    <div class="page" id="page-favorites">
+      <div class="section-header" style="margin-bottom:20px">
+        <span class="section-title">❤️ المفضلة</span>
+        <span id="fav-count" style="color:#888;font-size:13px">0 عقار</span>
+      </div>
+      <div id="favorites-list"></div>
+    </div>
+
+    <!-- ADD PAGE -->
+    <div class="page" id="page-add">
+      <div class="form-card">
+        <div class="form-title">
+          <span>➕</span> إضافة عقار جديد
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">عنوان الإعلان *</label>
+          <input class="form-input" id="f-title" type="text"
+                 placeholder="مثال: شقة فاخرة في قلب المدينة"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">نوع العقار *</label>
+          <div class="type-selector" id="type-selector">
+            <div class="type-option selected" onclick="selectType(this, 'شقة')">
+              <div class="type-option-icon">🏢</div>
+              <div class="type-option-label">شقة</div>
+            </div>
+            <div class="type-option" onclick="selectType(this, 'فيلا')">
+              <div class="type-option-icon">🏡</div>
+              <div class="type-option-label">فيلا</div>
+            </div>
+            
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">المدينة *</label>
+            <input class="form-input" id="f-city" type="text" placeholder="سكيكدةء"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">الحي</label>
+            <input class="form-input" id="f-area" type="text" placeholder="F3شقة سكنية ارضية للكراء للعطل الصيفي
+"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">السعر (دينار/شهر) *</label>
+            <input class="form-input" id="f-price" type="number" placeholder="5000"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">المساحة (م²)</label>
+            <input class="form-input" id="f-surface" type="number" placeholder="120"/>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">عدد الغرف</label>
+            <input class="form-input" id="f-rooms" type="number" placeholder="3"/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">الحمامات</label>
+            <input class="form-input" id="f-baths" type="number" placeholder="1"/>
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">الوصف</label>
+          <textarea class="form-input" id="f-desc" rows="3"
+                    placeholder="تتميز بمدخل خاص وحديقة صغيرة، قريبة من الشاطئ والغابة. مثالية للعائلات.
+ر..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">رقم الهاتف *</label>
+          <input class="form-input" id="f-phone" type="tel"
+                 placeholder="0550556504" style="direction:ltr"/>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">المرافق والخدمات</label>
+          <div class="amenities">
+            <div class="amenity-chip" onclick="toggleAmenity(this)">🪑 مفروش</div>
+            <div class="amenity-chip" onclick="toggleAmenity(this)">🚗 موقف</div>
+            <div class="amenity-chip" onclick="toggleAmenity(this)">📶 واي فاي</div>
+            <div class="amenity-chip" onclick="toggleAmenity(this)">❄️ تكييف</div>
+            <div class="amenity-chip" onclick="toggleAmenity(this)">🌿 حديقة</div>
+          </div>
+        </div>
+
+        <button class="submit-btn" onclick="addHouse()">
+          <i class="fas fa-paper-plane"></i>
+          نشر الإعلان الآن
+        </button>
+      </div>
+    </div>
+
+    <!-- PROFILE PAGE -->
+    <div class="page" id="page-profile">
+      <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+        <div class="profile-name">مرحباً بك!</div>
+        <div class="profile-type">🏠 مستخدم بيتي</div>
+      </div>
+
+      <div class="profile-stats">
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="my-houses-count">0</div>
+          <div class="profile-stat-lbl">عقاراتي</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-num" id="my-fav-count">0</div>
+          <div class="profile-stat-lbl">مفضلتي</div>
+        </div>
+        <div class="profile-stat">
+          <div class="profile-stat-num">0</div>
+          <div class="profile-stat-lbl">حجوزاتي</div>
+        </div>
+      </div>
+
+      <div class="profile-menu">
+        <div class="profile-menu-item" onclick="showPage('add'); setNav('add')">
+          <div class="menu-icon color-blue" style="color:white">➕</div>
+          <span class="menu-text">إضافة عقار جديد</span>
+          <i class="fas fa-chevron-left menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item" onclick="showPage('favorites'); setNav('favorites')">
+          <div class="menu-icon" style="background:#fce4ec">❤️</div>
+          <span class="menu-text">قائمة المفضلة</span>
+          <i class="fas fa-chevron-left menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item" onclick="showToast('📋 لا توجد حجوزات حالياً')">
+          <div class="menu-icon" style="background:#e8f5e9">📋</div>
+          <span class="menu-text">حجوزاتي</span>
+          <i class="fas fa-chevron-left menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item" onclick="showToast('📞 للتواصل:medjerdaouihocine@gmail.com')">
+          <div class="menu-icon" style="background:#fff3e0">📞</div>
+          <span class="menu-text">تواصل معنا</span>
+          <i class="fas fa-chevron-left menu-arrow"></i>
+        </div>
+        <div class="profile-menu-item" onclick="showToast('ℹ️ بيتي - الإصدار 1.0')">
+          <div class="menu-icon" style="background:#f3e5f5">ℹ️</div>
+          <span class="menu-text">عن التطبيق</span>
+          <i class="fas fa-chevron-left menu-arrow"></i>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ===== BOTTOM NAV ===== -->
+  <nav class="bottom-nav">
+    <button class="nav-btn active" id="nav-home" onclick="showPage('home'); setNav('home')">
+      <i class="fas fa-home"></i>
+      الرئيسية
+    </button>
+    <button class="nav-btn" id="nav-favorites" onclick="showPage('favorites'); setNav('favorites')">
+      <i class="fas fa-heart"></i>
+      المفضلة
+    </button>
+    <button class="nav-btn" id="nav-add" onclick="showPage('add'); setNav('add')">
+      <i class="fas fa-plus-circle"></i>
+      إضافة
+    </button>
+    <button class="nav-btn" id="nav-profile" onclick="showPage('profile'); setNav('profile')">
+      <i class="fas fa-user"></i>
+      حسابي
+    </button>
+  </nav>
+
+  <!-- ===== DETAIL MODAL ===== -->
+  <div class="modal-overlay" id="modal">
+    <div class="modal-sheet">
+      <div class="modal-handle"></div>
+      <div class="modal-header">
+        <span class="modal-title" id="modal-title">تفاصيل العقار</span>
+        <button class="modal-close" onclick="closeModal()">✕</button>
+      </div>
+      <div class="modal-body" id="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- ===== SUCCESS OVERLAY ===== -->
+  <div class="success-overlay" id="success-overlay">
+    <div class="success-box">
+      <div class="success-icon">🎉</div>
+      <div class="success-title">تم النشر بنجاح!</div>
+      <div class="success-sub">تمت إضافة عقارك بنجاح وسيظهر للمستخدمين الآن.</div>
+      <button class="success-btn" onclick="closeSuccess()">رائع! 👍</button>
+    </div>
+  </div>
+
+  <!-- ===== TOAST ===== -->
+  <div class="toast" id="toast"></div>
+
+  <script>
+    // ===== DATA =====
+    const colors = ['color-blue','color-green','color-orange','color-purple','color-teal','color-red'];
+    const emojis = { 'شقة':'🏢', 'فيلا':'🏡', 'منزل':'🏠', 'استوديو':'🛋️' };
+
+    let houses = [
+      {
+        id: 1, title: "F3 شقة سكنية ارضية للكراء للعطل الصيفية
+", type: "شقة",
+        city: "سكيكدة", area: "فلفلة", price: 5000,
+        rooms: 3, baths: 1, surface: 120,
+        desc: "شقة مفروشة بالكامل في قلب المدينة، قريبة من كل الخدمات. تتميز بإطلالة رائعة قريبة من الشاطئ والغابة. مثالية للعائلات مناسبة للعائلات والأفراد.",
+        phone: "0550556504", owner: "hocine",
+        amenities: ["🪑 مفروش", "📶 واي فاي", "❄️ تكييف"],
+        color: 'color-blue', featured: true
+      },
+      {
+        id: 2, title: "فيلا مع ساحة وشرفة", type: "فيلا",
+        city: "مراكش", area: "حي الحمراء", price: 8000,
+        rooms: 2, baths: 1, surface: 80,
+        desc: "منزل ذكي فريد من نوعه في خناق مايون، مزوّد بتوربين رياح للطاقة المتجددة وأنظمة تحكم ذكية.
+محاط بالطبيعة الخلابة في هضاب سكيكدة، يوفر
+هدوءاً تاماً وخصوصية مطلقة.",
+        phone: "0550556504", owner: "hocine",
+        amenities: ["🌊  واي فاي📶", "🌿 حديقة", "🚗 موقف", "❄️  2تكييف"],
+        color: 'color-green', featured: false
+      },
+      {
+        
+     
+      }
+    ];
+
+    let favorites = [];
+    let selectedType = 'شقة';
+    let myHousesCount = 0;
+
+    // ===== RENDER FUNCTIONS =====
+    function renderAll(list) {
+      renderFeatured(list);
+      renderHouses(list);
+      document.getElementById('totalCount').textContent = list.length;
+    }
+
+    function renderFeatured(list) {
+      const featured = list.find(h => h.featured) || list[0];
+      if (!featured) return;
+
+      document.getElementById('featured-container').innerHTML = `
+        <div class="featured-card" onclick="showDetails(${featured.id})">
+          <div class="featured-img-wrapper">
+            <div class="featured-img-placeholder ${featured.color}">
+              ${emojis[featured.type] || '🏠'}
+            </div>
+            <span class="featured-badge">${featured.type}</span>
+            <span class="featured-fav" onclick="event.stopPropagation(); toggleFav(${featured.id}, this)">
+              ${favorites.includes(featured.id) ? '❤️' : '🤍'}
+            </span>
+            <span class="price-badge">${featured.price.toLocaleString()} دج/شهر</span>
+          </div>
+          <div class="featured-info">
+            <div class="featured-title">${featured.title}</div>
+            <div class="featured-location">
+              <i class="fas fa-map-marker-alt"></i>
+              ${featured.area}، ${featured.city}
+            </div>
+            <div class="featured-specs">
+              <div class="spec-item">
+                <i class="fas fa-bed"></i> ${featured.rooms} غرف
+              </div>
+              <div class="spec-item">
+                <i class="fas fa-bath"></i> ${featured.baths} حمام
+              </div>
+              <div class="spec-item">
+                <i class="fas fa-vector-square"></i> ${featured.surface} م²
+              </div>
+            </div>
+          </div>
+        </div>`;
+    }
+
+    function renderHouses(list) {
+      const container = document.getElementById('houses-list');
+      const others = list.filter((h, i) => i > 0);
+      if (others.length === 0) {
+        container.innerHTML = `
+          <div style="text-align:center;padding:40px;color:#999">
+            <div style="font-size:60px;margin-bottom:12px">🔍</div>
+            <div style="font-size:16px;font-weight:700">لا توجد نتائج</div>
+            <div style="font-size:13px;margin-top:6px">جرب البحث بكلمة مختلفة</div>
+          </div>`;
+        return;
+      }
+      container.innerHTML = others.map(h => `
+        <div class="house-card" onclick="showDetails(${h.id})">
+          <div class="house-card-img ${h.color}">
+            ${emojis[h.type] || '🏠'}
+          </div>
+          <div class="house-card-info">
+            <div>
+              <div class="house-card-title">${h.title}</div>
+              <div class="house-card-city">
+                <i class="fas fa-map-marker-alt" style="color:#1976D2;font-size:11px"></i>
+                ${h.city} · ${h.type}
+              </div>
+            </div>
+            <div class="house-card-footer">
+              <div class="house-card-price">${h.price.toLocaleString()} دج</div>
+              <span class="house-card-fav" 
+                    onclick="event.stopPropagation(); toggleFav(${h.id}, this)">
+                ${favorites.includes(h.id) ? '❤️' : '🤍'}
+              </span>
+            </div>
+          </div>
+        </div>`).join('');
+    }
+
+    // ===== DETAIL MODAL =====
+    function showDetails(id) {
+      const h = houses.find(x => x.id === id);
+      if (!h) return;
+
+      document.getElementById('modal-title').textContent = h.type + ' للكراء';
+      document.getElementById('modal-body').innerHTML = `
+        <div class="modal-img-wrapper">
+          <div class="modal-img-placeholder ${h.color}">${emojis[h.type] || '🏠'}</div>
+        </div>
+
+        <div class="modal-price">${h.price.toLocaleString()} <span style="font-size:16px;color:#888">دينار/شهر</span></div>
+        <div class="modal-title" style="font-size:20px;margin-bottom:8px">${h.title}</div>
+        <div class="modal-location">
+          <i class="fas fa-map-marker-alt" style="color:#1976D2"></i>
+          ${h.area}، ${h.city}
+        </div>
+
+        <div class="modal-specs">
+          <div class="modal-spec">
+            <div class="modal-spec-icon">🛏️</div>
+            <div class="modal-spec-val">${h.rooms}</div>
+            <div class="modal-spec-lbl">غرف</div>
+          </div>
+          <div class="modal-spec">
+            <div class="modal-spec-icon">🚿</div>
+            <div class="modal-spec-val">${h.baths}</div>
+            <div class="modal-spec-lbl">حمامات</div>
+          </div>
+          <div class="modal-spec">
+            <div class="modal-spec-icon">📐</div>
+            <div class="modal-spec-val">${h.surface}</div>
+            <div class="modal-spec-lbl">م²</div>
+          </div>
+        </div>
+
+        <div class="modal-amenities">
+          ${h.amenities.map(a => `<span class="modal-amenity">${a}</span>`).join('')}
+        </div>
+
+        <div class="modal-desc">${h.desc}</div>
+
+        <div class="owner-card">
+          <div class="owner-avatar">👤</div>
+          <div class="owner-info">
+            <h4>${h.owner}</h4>
+            <p>مالك العقار · ${h.phone}</p>
+          </div>
+        </div>
+
+        <div class="action-btns">
+          <button class="action-btn btn-call" onclick="callOwner('${h.phone}')">
+            <i class="fas fa-phone"></i> اتصال
+          </button>
+          <button class="action-btn btn-msg" onclick="sendMsg('${h.phone}', '${h.title}')">
+            <i class="fas fa-comment"></i> رسالة
+          </button>
+        </div>
+
+        <button class="btn-book" onclick="bookHouse('${h.title}')">
+          <i class="fas fa-calendar-check"></i>
+          احجز هذا العقار الآن
+        </button>
+      `;
+      document.getElementById('modal').classList.add('show');
+    }
+
+    function closeModal() {
+      document.getElementById('modal').classList.remove('show');
+    }
+
+    function callOwner(phone) {
+      window.location.href = 'tel:' + phone;
+    }
+
+    function sendMsg(phone, title) {
+      const msg = encodeURIComponent('مرحباً، أنا مهتم بالعقار: ' + title);
+      window.open('https://wa.me/212' + phone.substring(1) + '?text=' + msg, '_blank');
+    }
+
+    function bookHouse(title) {
+      closeModal();
+      showToast('✅ تم إرسال طلب الحجز لـ: ' + title);
+    }
+
+    // ===== FAVORITES =====
+    function toggleFav(id, el) {
+      if (favorites.includes(id)) {
+        favorites = favorites.filter(f => f !== id);
+        showToast('💔 تمت الإزالة من المفضلة');
+      } else {
+        favorites.push(id);
+        showToast('❤️ تمت الإضافة للمفضلة');
+      }
+      el.textContent = favorites.includes(id) ? '❤️' : '🤍';
+      updateFavCount();
+      renderFavorites();
+    }
+
+    function updateFavCount() {
+      document.getElementById('fav-count').textContent = favorites.length + ' عقار';
+      document.getElementById('my-fav-count').textContent = favorites.length;
+    }
+
+    function renderFavorites() {
+      const container = document.getElementById('favorites-list');
+      if (favorites.length === 0) {
+        container.innerHTML = `
+          <div class="fav-empty">
+            <div class="fav-empty-icon">💔</div>
+            <div class="fav-empty-text">المفضلة فارغة</div>
+            <div class="fav-empty-sub">أضف عقارات للمفضلة من الصفحة الرئيسية</div>
+          </div>`;
+        return;
+      }
+      const favHouses = houses.filter(h => favorites.includes(h.id));
+      container.innerHTML = favHouses.map(h => `
+        <div class="featured-card" onclick="showDetails(${h.id})" style="margin-bottom:16px">
+          <div class="featured-img-wrapper">
+            <div class="featured-img-placeholder ${h.color}" style="height:150px">
+              ${emojis[h.type] || '🏠'}
+            </div>
+            <span class="featured-badge">${h.type}</span>
+            <span class="featured-fav" onclick="event.stopPropagation(); toggleFav(${h.id}, this)">
+              ❤️
+            </span>
+            <span class="price-badge">${h.price.toLocaleString()} دج/شهر</span>
+          </div>
+          <div class="featured-info">
+            <div class="featured-title">${h.title}</div>
+            <div class="featured-location">
+              <i class="fas fa-map-marker-alt"></i>
+              ${h.city}
+            </div>
+          </div>
+        </div>`).join('');
+    }
+
+    // ===== SEARCH & FILTER =====
+    function searchHouses(term) {
+      const t = term.toLowerCase();
+      const filtered = houses.filter(h =>
+        h.city.toLowerCase().includes(t) ||
+        h.title.toLowerCase().includes(t) ||
+        h.area.toLowerCase().includes(t) ||
+        h.type.toLowerCase().includes(t)
+      );
+      renderAll(filtered);
+    }
+
+    function filterCategory(type, btn) {
+      document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+
+      const filtered = type === 'all' ? houses :
+        houses.filter(h => h.type === type);
+      renderAll(filtered);
+    }
+
+    // ===== ADD HOUSE =====
+    function selectType(el, type) {
+      document.querySelectorAll('.type-option').forEach(o => o.classList.remove('selected'));
+      el.classList.add('selected');
+      selectedType = type;
+    }
+
+    function toggleAmenity(el) {
+      el.classList.toggle('selected');
+    }
+
+    function addHouse() {
+      const title = document.getElementById('f-title').value.trim();
+      const city = document.getElementById('f-city').value.trim();
+      const price = document.getElementById('f-price').value.trim();
+      const phone = document.getElementById('f-phone').value.trim();
+
+      if (!title || !city || !price || !phone) {
+        showToast('⚠️ يرجى ملء جميع الحقول المطلوبة *');
+        return;
+      }
+
+      const amenities = Array.from(
+        document.querySelectorAll('.amenity-chip.selected')
+      ).map(el => el.textContent.trim());
+
+      const newHouse = {
+        id: Date.now(),
+        title: title,
+        type: selectedType,
+        city: city,
+        area: document.getElementById('f-area').value || city,
+        price: parseInt(price),
+        rooms: parseInt(document.getElementById('f-rooms').value) || 2,
+        baths: parseInt(document.getElementById('f-baths').value) || 1,
+        surface: parseInt(document.getElementById('f-surface').value) || 80,
+        desc: document.getElementById('f-desc').value || 'عقار رائع للكراء',
+        phone: phone,
+        owner: 'أنت',
+        amenities: amenities,
+        color: colors[Math.floor(Math.random() * colors.length)],
+        featured: false
+      };
+
+      houses.unshift(newHouse);
+      myHousesCount++;
+      document.getElementById('my-houses-count').textContent = myHousesCount;
+
+      // مسح الحقول
+      ['f-title','f-city','f-area','f-price','f-surface',
+       'f-rooms','f-baths','f-desc','f-phone'].forEach(id => {
+        document.getElementById(id).value = '';
+      });
+      document.querySelectorAll('.amenity-chip').forEach(c => c.classList.remove('selected'));
+
+      // عرض نجاح
+      document.getElementById('success-overlay').classList.add('show');
+    }
+
+    function closeSuccess() {
+      document.getElementById('success-overlay').classList.remove('show');
+      showPage('home');
+      setNav('home');
+      renderAll(houses);
+    }
+
+    // ===== NAVIGATION =====
+    function showPage(page) {
+      document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+      document.getElementById('page-' + page).classList.add('active');
+
+      if (page === 'favorites') renderFavorites();
+      if (page === 'home') renderAll(houses);
+    }
+
+    function setNav(page) {
+      document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+      const btn = document.getElementById('nav-' + page);
+      if (btn) btn.classList.add('active');
+    }
+
+    // ===== TOAST =====
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      toast.textContent = msg;
+      toast.classList.remove('show');
+      void toast.offsetWidth;
+      toast.classList.add('show');
+      setTimeout(() => toast.classList.remove('show'), 2500);
+    }
+
+    // ===== INIT =====
+    window.onload = () => {
+      renderAll(houses);
+    };
+
+    // إغلاق المودال بالنقر خارجه
+    document.getElementById('modal').addEventListener('click', function(e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
+</body>
+</html>
